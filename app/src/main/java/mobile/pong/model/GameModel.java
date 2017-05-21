@@ -104,12 +104,9 @@ public class GameModel {
             if (cup >= 0) {
                 shooter.shoot(Player.SHOT_MADE);
                 if (getCurrentTeam() == 1) {
-                    teamOneCups[cup] = false;
-                } else {
                     teamTwoCups[cup] = false;
-                }
-                if (getCurrentPlayer() == 1) {
-                    playerOneMake = true;
+                } else {
+                    teamOneCups[cup] = false;
                 }
             } else {
                 shooter.shoot(Player.SHOT_MISSED);
