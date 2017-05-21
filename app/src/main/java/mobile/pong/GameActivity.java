@@ -39,7 +39,7 @@ public class GameActivity extends AppCompatActivity {
         Button buttonOne = (Button) findViewById(R.id.miss_button);
         buttonOne.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                //TODO
+                GameModel.getInstance().shot(-1);
             }
         });
 
