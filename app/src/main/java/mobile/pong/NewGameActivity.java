@@ -17,19 +17,37 @@ import mobile.pong.view.GameView;
 
 public class NewGameActivity extends AppCompatActivity {
 
+
+    static final int USER_LOGIN_REQUEST = 10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_game);
+        setContentView(R.layout.activity_new_game_2);
 
-        Button buttonOne = (Button) findViewById(R.id.new_game_button);
+        Button buttonOne = (Button) findViewById(R.id.btnOnePlayer);
         buttonOne.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                returnValues();
+                login(1);
+            }
+        });
+
+        Button btnTwo = (Button) findViewById(R.id.btnTwoPlayer);
+        btnTwo.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v){
+                login(2);
             }
         });
 
     }
+
+    private void login(int numPlayers){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, USER_LOGIN_REQUEST);
+
+    }
+
+
 
     private void returnValues() {
         Intent resultIntent = new Intent();
