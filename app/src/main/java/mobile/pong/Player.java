@@ -26,6 +26,7 @@ public class Player {
         losses = 0;
     }
 
+
     public void shoot(int result){
         totalShots++;
         if (result == SHOT_MADE){
@@ -45,7 +46,13 @@ public class Player {
 
     public int getTotalShots(){ return totalShots; }
 
-    public double getShootingPercentage() { return (1.0 * shotsMade) / totalShots; }
+    public double getShootingPercentage() {
+        if (totalShots == 0) {
+            return 0;
+        } else {
+            return (1.0 * shotsMade) / totalShots;
+        }
+    }
 
     public int getStreak() { return streak; }
 
