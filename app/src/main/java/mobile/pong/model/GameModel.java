@@ -18,8 +18,8 @@ public class GameModel {
         return instance;
     }
 
-    private Boolean[] playerOneCups;
-    private Boolean[] playerTwoCups;
+    private Boolean[] playerOneCups = new Boolean[10];
+    private Boolean[] playerTwoCups = new Boolean[10];
 
     private int currentPlayer = 1;
 

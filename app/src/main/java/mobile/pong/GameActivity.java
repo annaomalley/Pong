@@ -10,8 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import mobile.pong.view.GameView;
+import mobile.pong.model.GameModel;
 
 public class GameActivity extends AppCompatActivity {
+
+    private GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final GameView gameView = (GameView) findViewById(R.id.gameView);
+        gameView = (GameView) findViewById(R.id.gameView);
     }
 
     @Override
@@ -38,7 +41,8 @@ public class GameActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_new_game) {
+            GameModel.getInstance().newGame();
             return true;
         }
 
