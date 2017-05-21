@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="mobile.pong.GameActivity">
+    tools:context="mobile.pong.GameActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,9 +29,17 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <Button
+        android:id="@+id/miss_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MISS"/>
+
     <mobile.pong.view.GameView
         android:id="@+id/gameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

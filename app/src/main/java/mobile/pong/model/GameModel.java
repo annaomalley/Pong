@@ -15,6 +15,7 @@ import static java.security.AccessController.getContext;
 public class GameModel {
 
     private static GameModel instance = null;
+    private boolean gameStarted = false;
 
     private GameModel() {
     }
@@ -64,6 +65,8 @@ public class GameModel {
         gameOver = false;
 
         this.context = context;
+
+        gameStarted = true;
     }
 
 
@@ -247,6 +250,10 @@ public class GameModel {
             return teamOneCups;
         }
         return teamTwoCups;
+    }
+
+    public Boolean getGameStarted() {
+        return gameStarted;
     }
 
 
