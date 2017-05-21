@@ -32,6 +32,9 @@ public class Player {
             shotsMade ++;
             streak++;
         }
+        else{
+            streak = 0;
+        }
     }
 
     public int getShotsMade(){ return shotsMade; }
