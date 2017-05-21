@@ -17,6 +17,16 @@ public class GameView extends View{
         GameModel.getInstance().newGame();
     }
 
+    private void drawCups() {
+        Boolean[] cups;
+        if(GameModel.getInstance().getCurrentPlayer() == 1) {
+            cups = GameModel.getInstance().getCups(2);
+        }
+        else if(GameModel.getInstance().getCurrentPlayer() == 2) {
+            cups = GameModel.getInstance().getCups(1);
+        }
+    }
+
 
 
 

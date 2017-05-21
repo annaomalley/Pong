@@ -40,7 +40,7 @@ public class GameModel {
         return currentPlayer;
     }
 
-    public void setField(short player, short cup, boolean value) {
+    public void setField(int player, int cup, boolean value) {
         if(player == 1) {
             playerOneCups[cup] = value;
         }
@@ -49,11 +49,11 @@ public class GameModel {
         }
     }
 
-    public boolean getField(short player, short cup) {
-        if(player == 1) {
-            return playerOneCups[cup];
+    public Boolean[] getCups(int player) {
+        if (player == 1) {
+            return playerOneCups;
         }
-        return playerTwoCups[cup];
+        return playerTwoCups;
     }
 
 
