@@ -256,5 +256,13 @@ public class GameModel {
         return gameStarted;
     }
 
+    public Player[] getTeamOnePlayers() {
+        return teamOne;
+    }
+
+    public Player[] getTeamTwoPlayers() {
+        return teamTwo;
+    }
+
 
 }

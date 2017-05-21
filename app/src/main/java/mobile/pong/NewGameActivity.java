@@ -36,7 +36,7 @@ public class NewGameActivity extends AppCompatActivity {
         resultIntent.putExtra("team1player1", ((TextView) findViewById(R.id.team1player1)).getText().toString());
         resultIntent.putExtra("team1player2", ((TextView) findViewById(R.id.team1player2)).getText().toString());
         resultIntent.putExtra("team2player1", ((TextView) findViewById(R.id.team2player1)).getText().toString());
-        resultIntent.putExtra("team1player2", ((TextView) findViewById(R.id.team2player2)).getText().toString());
+        resultIntent.putExtra("team2player2", ((TextView) findViewById(R.id.team2player2)).getText().toString());
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }

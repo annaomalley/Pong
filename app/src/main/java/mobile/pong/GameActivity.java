@@ -40,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
         buttonOne.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 GameModel.getInstance().shot(-1);
+                gameView.invalidate();
             }
         });
 
