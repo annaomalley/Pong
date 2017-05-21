@@ -91,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
                     Player player4 = new Player(team2player2);
                     Player[] teamTwo = {player3, player4};
 
-                    GameModel.getInstance().newGame(teamOne, teamTwo, getApplicationContext());
+                    GameModel.getInstance().newGame(teamOne, teamTwo, GameActivity.this);
                 }
                 break;
             }
