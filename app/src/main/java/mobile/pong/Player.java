@@ -37,6 +37,10 @@ public class Player {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getShotsMade(){ return shotsMade; }
 
     public int getTotalShots(){ return totalShots; }
