@@ -18,4 +18,43 @@ public class GameModel {
         return instance;
     }
 
+    private Boolean[] playerOneCups;
+    private Boolean[] playerTwoCups;
+
+    private int currentPlayer = 1;
+
+
+    public void newGame() {
+        for(int i = 0; i<10; i++) {
+            playerOneCups[i] = true;
+            playerTwoCups[i] = true;
+        }
+        currentPlayer = 1;
+    }
+
+    public void changeCurrentPlayer() {
+        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setField(short player, short cup, boolean value) {
+        if(player == 1) {
+            playerOneCups[cup] = value;
+        }
+        else if(player == 2) {
+            playerTwoCups[cup] = value;
+        }
+    }
+
+    public boolean getField(short player, short cup) {
+        if(player == 1) {
+            return playerOneCups[cup];
+        }
+        return playerTwoCups[cup];
+    }
+
+
 }
