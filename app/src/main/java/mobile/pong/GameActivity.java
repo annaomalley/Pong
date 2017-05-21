@@ -62,7 +62,7 @@ public class GameActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_new_game) {
-            Intent intent = new Intent(this, NewGameActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivityForResult(intent,NEW_GAME_REQUEST);
             return true;
         }
