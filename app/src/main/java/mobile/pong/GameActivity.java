@@ -20,6 +20,10 @@ public class GameActivity extends AppCompatActivity {
 
 
     static final int NEW_GAME_REQUEST = 0;
+    public static final int HEATING_UP = 1;
+    public static final int ON_FIRE = 2;
+    public static final int BALLS_BACK = 3;
+    public static final int GAME_OVER = 4;
 
     private GameView gameView;
 
@@ -74,14 +78,40 @@ public class GameActivity extends AppCompatActivity {
             case (NEW_GAME_REQUEST) : {
                 if (resultCode == Activity.RESULT_OK) {
                     String team1player1 = data.getStringExtra("team1player1");
+                    Player player1 = new Player(team1player1);
                     String team1player2 = data.getStringExtra("team1player2");
+                    Player player2 = new Player(team1player2);
+
+                    Player[] teamOne = {player1, player2};
+
                     String team2player1 = data.getStringExtra("team2player1");
+                    Player player3 = new Player(team2player1);
                     String team2player2 = data.getStringExtra("team2player2");
-                    GameModel.getInstance().newGame(team1player1,team1player2,team2player1,team2player2);
+                    Player player4 = new Player(team2player2);
+                    Player[] teamTwo = {player3, player4};
+
+                    GameModel.getInstance().newGame(teamOne, teamTwo, getApplicationContext());
                 }
                 break;
             }
         }
+    }
+
+    public void makeToast(int event){
+        String msg = "";
+        if (event == HEATING_UP){
+            msg = "Heating up!";
+        }
+        if (event == ON_FIRE){
+            msg = "On fire! Shoot again";
+        }
+        if (event == BALLS_BACK){
+            msg = "Balls back";
+        }
+        if (event == GAME_OVER){
+            msg = "Game over!";
+        }
+        Toast.makeText(GameActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 
 }
