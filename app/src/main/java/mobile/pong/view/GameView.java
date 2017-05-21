@@ -14,7 +14,6 @@ public class GameView extends View{
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        GameModel.getInstance().newGame();
     }
 
     private void drawCups() {

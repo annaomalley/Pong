@@ -9,11 +9,16 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
+import android.app.Activity;
+import android.widget.Toast;
 
 import mobile.pong.view.GameView;
 import mobile.pong.model.GameModel;
 
 public class GameActivity extends AppCompatActivity {
+
+
+    static final int NEW_GAME_REQUEST = 0;
 
     private GameView gameView;
 
@@ -44,10 +49,28 @@ public class GameActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_new_game) {
             Intent intent = new Intent(this, NewGameActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent,NEW_GAME_REQUEST);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (NEW_GAME_REQUEST) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String team1player1 = data.getStringExtra("team1player1");
+                    String team1player2 = data.getStringExtra("team1player2");
+                    String team2player1 = data.getStringExtra("team2player1");
+                    String team2player2 = data.getStringExtra("team2player2");
+                    GameModel.getInstance().newGame(team1player1,team1player2,team2player1,team2player2);
+                }
+                break;
+            }
+        }
+    }
+
 }

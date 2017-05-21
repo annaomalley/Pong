@@ -21,15 +21,22 @@ public class GameModel {
     private Boolean[] playerOneCups = new Boolean[10];
     private Boolean[] playerTwoCups = new Boolean[10];
 
+
+    private String[][] players = new String[2][2];
+
     private int currentPlayer = 1;
 
 
-    public void newGame() {
+    public void newGame(String team1player1, String team1player2, String team2player1, String team2player2) {
         for(int i = 0; i<10; i++) {
             playerOneCups[i] = true;
             playerTwoCups[i] = true;
         }
         currentPlayer = 1;
+        this.players[0][0] = team1player1;
+        this.players[0][1] = team1player2;
+        this.players[1][0] = team2player1;
+        this.players[1][1] = team2player2;
     }
 
     public void changeCurrentPlayer() {
