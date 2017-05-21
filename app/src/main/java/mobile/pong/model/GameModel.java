@@ -2,8 +2,11 @@ package mobile.pong.model;
 
 import android.content.Context;
 import android.widget.Toast;
+import android.content.Intent;
+import android.util.Log;
 
 import mobile.pong.GameActivity;
+import mobile.pong.NextTurnActivity;
 import mobile.pong.Player;
 
 import static java.security.AccessController.getContext;
@@ -43,7 +46,6 @@ public class GameModel {
 
     private Context context;
 
-
     public void newGame(Player[] teamOne, Player[] teamTwo, Context context) {
         if (teamOne.length != 2 || teamTwo.length != 2) {
             throw new IllegalStateException("team size must be 2");
@@ -67,6 +69,8 @@ public class GameModel {
         this.context = context;
 
         gameStarted = true;
+
+        showNextTurnScreen();
     }
 
 
@@ -120,9 +124,11 @@ public class GameModel {
                 ((GameActivity) context).makeToast(GameActivity.GAME_OVER);
             } else {
                 nextTurn();
+                showNextTurnScreen();
             }
         }
     }
+
 
     private boolean gameOver() {
         if (countCups(teamOneCups) == 0){
@@ -262,6 +268,21 @@ public class GameModel {
 
     public Player[] getTeamTwoPlayers() {
         return teamTwo;
+    }
+
+    private void showNextTurnScreen() {
+        Intent i = new Intent(context, NextTurnActivity.class);
+        i.putExtra("player", getCurrentPlayersName());
+        Log.v("current player",Integer.toString(currentPlayer));
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
+    }
+
+    private String getCurrentPlayersName() {
+        if (currentTeam==1) {
+            return(teamOne[currentPlayer-1].getName());
+        }
+        return teamTwo[currentPlayer-1].getName();
     }
 
 

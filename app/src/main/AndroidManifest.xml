@@ -21,6 +21,10 @@
         <activity
             android:name=".NewGameActivity">
         </activity>
+        <activity
+            android:name=".NextTurnActivity">
+        </activity>
+
     </application>
 
 </manifest>
