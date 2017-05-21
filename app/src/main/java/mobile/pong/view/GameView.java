@@ -18,13 +18,19 @@ public class GameView extends View{
     }
 
     private void drawCups() {
-        Boolean[] cups;
+        Boolean[] currentPlayerCups;
+        Boolean[] opponentCups;
+
         if(GameModel.getInstance().getCurrentPlayer() == 1) {
-            cups = GameModel.getInstance().getCups(2);
+            opponentCups = GameModel.getInstance().getCups(2);
+            currentPlayerCups = GameModel.getInstance().getCups(1);
         }
         else if(GameModel.getInstance().getCurrentPlayer() == 2) {
-            cups = GameModel.getInstance().getCups(1);
+            opponentCups = GameModel.getInstance().getCups(1);
+            currentPlayerCups = GameModel.getInstance().getCups(2);
         }
+
+
     }
 
 

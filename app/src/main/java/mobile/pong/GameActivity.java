@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 
 import mobile.pong.view.GameView;
 import mobile.pong.model.GameModel;
@@ -42,7 +43,8 @@ public class GameActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_new_game) {
-            GameModel.getInstance().newGame();
+            Intent intent = new Intent(this, NewGameActivity.class);
+            startActivity(intent);
             return true;
         }
 
