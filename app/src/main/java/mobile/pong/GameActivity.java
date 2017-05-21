@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.app.Activity;
 import android.widget.Toast;
+import android.widget.Button;
 
 import mobile.pong.view.GameView;
 import mobile.pong.model.GameModel;
@@ -30,6 +31,14 @@ public class GameActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         gameView = (GameView) findViewById(R.id.gameView);
+
+        Button buttonOne = (Button) findViewById(R.id.miss_button);
+        buttonOne.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                //TODO
+            }
+        });
+
     }
 
     @Override
@@ -55,6 +64,8 @@ public class GameActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

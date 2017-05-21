@@ -7,6 +7,7 @@ package mobile.pong.model;
 public class GameModel {
 
     private static GameModel instance = null;
+    private Boolean gameStarted = false;
 
     private GameModel() {
     }
@@ -37,6 +38,7 @@ public class GameModel {
         this.players[0][1] = team1player2;
         this.players[1][0] = team2player1;
         this.players[1][1] = team2player2;
+        gameStarted = true;
     }
 
     public void changeCurrentPlayer() {
@@ -61,6 +63,10 @@ public class GameModel {
             return playerOneCups;
         }
         return playerTwoCups;
+    }
+
+    public Boolean getGameStarted() {
+        return gameStarted;
     }
 
 
