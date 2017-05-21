@@ -112,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
         if (event == GAME_OVER){
             msg = "Game over!";
         }
-        Toast.makeText(GameActivity.this, msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(GameActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 
 

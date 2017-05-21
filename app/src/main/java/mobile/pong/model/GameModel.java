@@ -222,6 +222,7 @@ public class GameModel {
             }
             if (streak == 1) {
                 if (playerOneMake) {
+                    ((GameActivity) context).makeToast(GameActivity.BALLS_BACK);
                     changeCurrentPlayer();
                     return;
                 } else {
@@ -233,6 +234,7 @@ public class GameModel {
             if (streak == 2) {
                 ((GameActivity) context).makeToast(GameActivity.HEATING_UP);
                 if (playerOneMake) {
+                    ((GameActivity) context).makeToast(GameActivity.BALLS_BACK);
                     changeCurrentPlayer();
                     return;
                 } else {
