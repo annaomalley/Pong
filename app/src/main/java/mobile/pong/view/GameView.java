@@ -171,6 +171,7 @@ public class GameView extends View{
             }
             Log.v("cell",Integer.toString(cell));
             if(cell!=-1) {
+                GameModel.getInstance().shot(cell);
                 Xevent = event;
                 invalidate();
             }
