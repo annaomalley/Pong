@@ -37,7 +37,7 @@ public class Player implements Comparable<Player>{
 
     }
 
-    public Player(String name){
+    public Player(String name, String key){
         this.name = name;
         this.uId = key;
         shotsMade = 0;
@@ -127,7 +127,7 @@ public class Player implements Comparable<Player>{
         HashMap<String, Object> result = new HashMap<>();
         result.put("losses", losses);
         result.put("name", name);
-        result.put("shootingPercentage", shotPercentage);
+        result.put("shootingPercentage", shootingPercentage);
         result.put("shotsMade", shotsMade);
         result.put("streak", streak);
         result.put("totalShots", totalShots);
@@ -141,7 +141,7 @@ public class Player implements Comparable<Player>{
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("players").child(getuId());
         mDatabase.updateChildren(toMap());
     }
-}
+
 
 
     @Override
