@@ -134,7 +134,7 @@ public class GameView extends View{
             canvas.drawText(teamOneNames, getWidth() / 10, 15*getHeight() / 24, paintText);
         }
         else {
-            canvas.drawText(teamOneNames, getWidth() / 10, 3*getHeight() / 6, paintText);
+            canvas.drawText(teamOneNames, getWidth() / 10, 5*getHeight() / 12, paintText);
         }
     }
 
