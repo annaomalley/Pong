@@ -12,7 +12,7 @@ import android.graphics.Path;
 
 import android.graphics.Rect;
 
-import mobile.pong.Player;
+import mobile.pong.data.Player;
 import mobile.pong.model.GameModel;
 
 /**

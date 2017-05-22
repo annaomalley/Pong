@@ -7,10 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
 
-/**
- * Created by Anna on 5/21/17.
- */
-
 public class NextTurnActivity extends AppCompatActivity {
 
     @Override
@@ -19,11 +15,11 @@ public class NextTurnActivity extends AppCompatActivity {
         setContentView(R.layout.activity_next_turn);
 
         Intent intent = getIntent();
-        String player = intent.getStringExtra("player");
+        String player = intent.getStringExtra(getString(R.string.intent_extra_name));
 
 
         TextView tvPlayersTurn = (TextView) findViewById(R.id.whose_turn_textview);
-        tvPlayersTurn.setText(player + "'s Turn");
+        tvPlayersTurn.setText(player + getString(R.string.turn_msg_suffix));
 
         Button buttonOne = (Button) findViewById(R.id.continue_button);
         buttonOne.setOnClickListener(new Button.OnClickListener() {

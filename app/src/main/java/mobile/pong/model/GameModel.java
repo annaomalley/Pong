@@ -6,11 +6,8 @@ import android.util.Log;
 
 import mobile.pong.GameActivity;
 import mobile.pong.NextTurnActivity;
-import mobile.pong.Player;
-
-/**
- * Created by Anna on 5/21/17.
- */
+import mobile.pong.R;
+import mobile.pong.data.Player;
 
 public class GameModel {
 
@@ -39,7 +36,7 @@ public class GameModel {
     private int currentTeam = 1;
     private int currentPlayer = 1;
 
-    private boolean gameOver = false;
+    private int gameOver = -1;
 
     private Context context;
 
@@ -48,13 +45,13 @@ public class GameModel {
         this.teamTwo = teamTwo;
     }
 
-    public void setContext(Context context){
+    public void setContext(Context context) {
         newGame(teamOne, teamTwo, context);
     }
 
     public void newGame(Player[] teamOne, Player[] teamTwo, Context context) {
         if (teamOne.length != 2 || teamTwo.length != 2) {
-            throw new IllegalStateException("team size must be 2");
+            throw new IllegalStateException(context.getString(R.string.err_team_size));
         }
 
         for (int i = 0; i < 10; i++) {
@@ -74,7 +71,7 @@ public class GameModel {
 
         playerOneMake = false;
         ballsBack = false;
-        gameOver = false;
+        gameOver = -1;
 
         this.context = context;
 
@@ -115,7 +112,7 @@ public class GameModel {
 
     /* Cup is the cup number if a cup is made, or -1 if the shot was a miss. */
     public void shot(int cup) {
-        if (gameOver == false) {
+        if (gameOver == -1) {
             Player shooter = getPlayerObj();
 
             if (cup >= 0) {
@@ -130,9 +127,11 @@ public class GameModel {
                 shooter.shoot(Player.SHOT_MISSED);
             }
 
-            if (gameOver()) {
-                gameOver = true;
+            int result = gameOver();
+            if (result > 0) {
+                gameOver = result;
                 ((GameActivity) context).makeToast(GameActivity.GAME_OVER);
+                ((GameActivity) context).showRematchDialog(result);
             } else {
                 nextTurn();
                 showNextTurnScreen();
@@ -141,42 +140,40 @@ public class GameModel {
     }
 
 
-    private boolean gameOver() {
-        if (gameOver == false) {
+    private int gameOver() {
+        if (gameOver == -1) {
             if (countCups(teamOneCups) == 0) {
                 setWin(teamTwo);
                 setLoss(teamOne);
-                return true;
+                return 2;
             }
             if (countCups(teamTwoCups) == 0) {
                 setWin(teamOne);
                 setLoss(teamTwo);
-                return true;
+                return 1;
             }
-            return false;
+            return -1;
         }
-        return true;
+        return -1;
     }
 
-    private void setWin(Player[] team){
+    private void setWin(Player[] team) {
         Player p0 = team[0];
         Player p1 = team[1];
-        if (p0.equals(p1)){
+        if (p0.equals(p1)) {
             p0.win();
-        }
-        else{
+        } else {
             p0.win();
             p1.win();
         }
     }
 
-    private void setLoss(Player[] team){
+    private void setLoss(Player[] team) {
         Player p0 = team[0];
         Player p1 = team[1];
-        if (p0.equals(p1)){
+        if (p0.equals(p1)) {
             p0.lose();
-        }
-        else{
+        } else {
             p0.lose();
             p1.lose();
         }
@@ -288,17 +285,16 @@ public class GameModel {
 
     private void showNextTurnScreen() {
         Intent i = new Intent(context, NextTurnActivity.class);
-        i.putExtra("player", getCurrentPlayersName());
-        Log.v("current player",Integer.toString(currentPlayer));
+        i.putExtra(context.getString(R.string.intent_extra_name), getCurrentPlayersName());
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 
     private String getCurrentPlayersName() {
-        if (currentTeam==1) {
-            return(teamOne[currentPlayer-1].getName());
+        if (currentTeam == 1) {
+            return (teamOne[currentPlayer - 1].getName());
         }
-        return teamTwo[currentPlayer-1].getName();
+        return teamTwo[currentPlayer - 1].getName();
     }
 
 

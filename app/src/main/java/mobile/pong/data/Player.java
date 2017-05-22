@@ -1,23 +1,16 @@
-package mobile.pong;
+package mobile.pong.data;
 
 import java.util.Comparator;
 import java.util.Map;
 
-import android.util.Log;
-
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Map;
 
-/**
- * Created by student on 21/05/2017.
- */
 
-public class Player implements Comparable<Player>{
+public class Player implements Comparable<Player> {
 
     public static final int SHOT_MISSED = 0;
     public static final int SHOT_MADE = 1;
@@ -37,7 +30,7 @@ public class Player implements Comparable<Player>{
 
     }
 
-    public Player(String name, String key){
+    public Player(String name, String key) {
         this.name = name;
         this.uId = key;
         shotsMade = 0;
@@ -54,13 +47,12 @@ public class Player implements Comparable<Player>{
     }
 
 
-    public void shoot(int result){
+    public void shoot(int result) {
         totalShots++;
-        if (result == SHOT_MADE){
-            shotsMade ++;
+        if (result == SHOT_MADE) {
+            shotsMade++;
             streak++;
-        }
-        else{
+        } else {
             streak = 0;
         }
         updateShotPercentage();
@@ -71,16 +63,22 @@ public class Player implements Comparable<Player>{
         return name;
     }
 
-    public int getShotsMade(){ return shotsMade; }
+    public int getShotsMade() {
+        return shotsMade;
+    }
 
-    public int getTotalShots(){ return totalShots; }
+    public int getTotalShots() {
+        return totalShots;
+    }
 
-    public double getShootingPercentage() { return shootingPercentage; }
+    public double getShootingPercentage() {
+        return shootingPercentage;
+    }
 
-    public void updateShotPercentage(){
+    public void updateShotPercentage() {
         if (totalShots == 0) {
-                shootingPercentage = 0;        }
-        else {
+            shootingPercentage = 0;
+        } else {
             shootingPercentage = (100.0 * shotsMade) / totalShots;
         }
     }
@@ -93,19 +91,28 @@ public class Player implements Comparable<Player>{
         this.uId = uId;
     }
 
-    public int getStreak() { return streak; }
+    public int getStreak() {
+        return streak;
+    }
 
-    public int getWins(){ return wins;}
-    public int getLosses(){ return losses;}
+    public int getWins() {
+        return wins;
+    }
 
-    public double getWinPercentage(){ return winPercentage; }
+    public int getLosses() {
+        return losses;
+    }
 
-    public void updateWinPercentage(){
+    public double getWinPercentage() {
+        return winPercentage;
+    }
+
+    public void updateWinPercentage() {
         int games = wins + losses;
         winPercentage = (100.0 * wins) / games;
     }
 
-    public void lose(){
+    public void lose() {
         losses++;
         updateWinPercentage();
         updateDatabase();
@@ -117,11 +124,11 @@ public class Player implements Comparable<Player>{
         updateDatabase();
     }
 
-    public void resetStreak(){
+    public void resetStreak() {
         streak = 0;
     }
 
-    public boolean equals(Player other){
+    public boolean equals(Player other) {
         return this.name.equals(other.name);
     }
 
@@ -141,11 +148,10 @@ public class Player implements Comparable<Player>{
         return result;
     }
 
-    private void updateDatabase(){
+    private void updateDatabase() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("players").child(getuId());
         mDatabase.updateChildren(toMap());
     }
-
 
 
     @Override
@@ -165,10 +171,10 @@ public class Player implements Comparable<Player>{
         public static Comparator<Player> PERCENTAGE = new Comparator<Player>() {
             @Override
             public int compare(Player o1, Player o2) {
-                if(o1.getShootingPercentage()>o2.getShootingPercentage()) {
+                if (o1.getShootingPercentage() > o2.getShootingPercentage()) {
                     return -1;
                 }
-                if(o1.getShootingPercentage()<o2.getShootingPercentage()) {
+                if (o1.getShootingPercentage() < o2.getShootingPercentage()) {
                     return 1;
                 }
                 return 0;
@@ -177,4 +183,4 @@ public class Player implements Comparable<Player>{
 
     }
 
-    }
+}

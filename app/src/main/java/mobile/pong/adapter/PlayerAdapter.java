@@ -3,33 +3,32 @@ package mobile.pong.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.view.View;
+
 import java.util.List;
+
 import android.content.Context;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
+
 import java.util.Collections;
+
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import java.util.Map;
+
 import java.util.LinkedList;
+
 import android.util.Log;
-import java.util.concurrent.TimeUnit;
 
 
 import mobile.pong.R;
-import mobile.pong.Player;
+import mobile.pong.data.Player;
 
-
-
-
-/**
- * Created by Anna on 5/22/17.
- */
 
 public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder> {
 
@@ -50,25 +49,22 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
 
     public PlayerAdapter(Context context) {
         playerList = getUsers();
-        Log.v("size",Integer.toString(playerList.size()));
-        //sortplayerList();
         this.context = context;
     }
 
     private List<Player> getUsers() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("players");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(context.getString(R.string.fb_players));
         final List<Player> playerList = new LinkedList<Player>();
         ref.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                        for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
                             Player player = messageSnapshot.getValue(Player.class);
                             addPlayer(player);
-                            Log.v("ADDED",player.getName());
-
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         //handle databaseError
