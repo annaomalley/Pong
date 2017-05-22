@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     private int usersLoggedIn;
-    private String[] users = new String[4];
+    private String[] usernames = new String[4];
 
     private ProgressDialog pd;
 
@@ -196,7 +196,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean repeatUser(String name){
         for (int i = 0; i < usersLoggedIn; i++){
-            if (users[i].equals(name)){
+            if (usernames[i].equals(name)){
                 username.setError("User can only be logged in once per game!!!");
                 return true;
             }
@@ -205,9 +205,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void moveToNext(String name){
-//        createPlayer(name);
-
-        users[usersLoggedIn] = name;
+        usernames[usersLoggedIn] = name;
         usersLoggedIn ++;
 
         if (usersLoggedIn == 4){
@@ -232,10 +230,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void returnValues() {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("team1player1", users[0]);
-        resultIntent.putExtra("team1player2", users[1]);
-        resultIntent.putExtra("team2player1", users[2]);
-        resultIntent.putExtra("team2player2", users[3]);
+        resultIntent.putExtra("team1player1", usernames[0]);
+        resultIntent.putExtra("team1player2", usernames[1]);
+        resultIntent.putExtra("team2player1", usernames[2]);
+        resultIntent.putExtra("team2player2", usernames[3]);
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
@@ -251,7 +249,7 @@ public class LoginActivity extends AppCompatActivity {
     private void createPlayer(String name){
         String key = FirebaseDatabase.getInstance().getReference()
                 .child("players").push().getKey();
-        Player newPlayer = new Player(name);
+        Player newPlayer = new Player(name, key);
 
         FirebaseDatabase.getInstance().getReference().
                 child("players").child(key).setValue(newPlayer);
