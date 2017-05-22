@@ -1,10 +1,12 @@
 package mobile.pong;
 
+import java.util.Comparator;
+
 /**
  * Created by student on 21/05/2017.
  */
 
-public class Player {
+public class Player implements Comparable<Player>{
 
     public static final int SHOT_MISSED = 0;
     public static final int SHOT_MADE = 1;
@@ -16,6 +18,11 @@ public class Player {
 
     private int wins;
     private int losses;
+    private double shootingPercentage;
+
+    public Player() {
+
+    }
 
     public Player(String name){
         this.name = name;
@@ -24,6 +31,11 @@ public class Player {
         streak = 0;
         wins = 0;
         losses = 0;
+        shootingPercentage = 0;
+    }
+
+    public void setShootingPercentage(double shootingPercentage) {
+        this.shootingPercentage = shootingPercentage;
     }
 
 
@@ -70,4 +82,35 @@ public class Player {
     public boolean equals(Player other){
         return this.name.equals(other.name);
     }
-}
+
+
+    @Override
+    public int compareTo(Player o) {
+        return Comparators.PERCENTAGE.compare(this, o);
+    }
+
+    public static class Comparators {
+
+        public static Comparator<Player> NAME = new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        };
+
+        public static Comparator<Player> PERCENTAGE = new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                if(o1.getShootingPercentage()>o2.getShootingPercentage()) {
+                    return -1;
+                }
+                if(o1.getShootingPercentage()<o2.getShootingPercentage()) {
+                    return 1;
+                }
+                return 0;
+            }
+        };
+
+    }
+
+    }

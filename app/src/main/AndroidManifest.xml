@@ -25,6 +25,10 @@
         <activity
             android:name=".NextTurnActivity">
         </activity>
+        <activity
+            android:name=".RankingActivity">
+        </activity>
+
         <activity android:name=".LoginActivity"
             />
         <uses-permission android:name="android.permission.INTERNET" />

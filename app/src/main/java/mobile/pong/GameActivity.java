@@ -66,6 +66,12 @@ public class GameActivity extends AppCompatActivity {
             startActivityForResult(intent,NEW_GAME_REQUEST);
             return true;
         }
+        if (id == R.id.action_leaderboard) {
+            Intent intent = new Intent(this, RankingActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
