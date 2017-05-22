@@ -117,6 +117,10 @@ public class Player implements Comparable<Player>{
         updateDatabase();
     }
 
+    public void resetStreak(){
+        streak = 0;
+    }
+
     public boolean equals(Player other){
         return this.name.equals(other.name);
     }

@@ -43,6 +43,15 @@ public class GameModel {
 
     private Context context;
 
+    public void newGame(Player[] teamOne, Player[] teamTwo) {
+        this.teamOne = teamOne;
+        this.teamTwo = teamTwo;
+    }
+
+    public void setContext(Context context){
+        newGame(teamOne, teamTwo, context);
+    }
+
     public void newGame(Player[] teamOne, Player[] teamTwo, Context context) {
         if (teamOne.length != 2 || teamTwo.length != 2) {
             throw new IllegalStateException("team size must be 2");
@@ -57,7 +66,11 @@ public class GameModel {
         currentTeam = 1;
 
         this.teamOne = teamOne;
+        teamOne[0].resetStreak();
+        teamOne[1].resetStreak();
         this.teamTwo = teamTwo;
+        teamTwo[0].resetStreak();
+        teamTwo[1].resetStreak();
 
         playerOneMake = false;
         ballsBack = false;
@@ -102,14 +115,15 @@ public class GameModel {
 
     /* Cup is the cup number if a cup is made, or -1 if the shot was a miss. */
     public void shot(int cup) {
-        if (!gameOver()) {
+        if (gameOver == false) {
             Player shooter = getPlayerObj();
 
             if (cup >= 0) {
-                shooter.shoot(Player.SHOT_MADE);
-                if (getCurrentTeam() == 1) {
+                if (getCurrentTeam() == 1 && teamTwoCups[cup] == true) {
+                    shooter.shoot(Player.SHOT_MADE);
                     teamTwoCups[cup] = false;
-                } else {
+                } else if (getCurrentTeam() == 2 && teamOneCups[cup] == true) {
+                    shooter.shoot(Player.SHOT_MADE);
                     teamOneCups[cup] = false;
                 }
             } else {
@@ -128,17 +142,20 @@ public class GameModel {
 
 
     private boolean gameOver() {
-        if (countCups(teamOneCups) == 0){
-            setWin(teamTwo);
-            setLoss(teamOne);
-            return true;
+        if (gameOver == false) {
+            if (countCups(teamOneCups) == 0) {
+                setWin(teamTwo);
+                setLoss(teamOne);
+                return true;
+            }
+            if (countCups(teamTwoCups) == 0) {
+                setWin(teamOne);
+                setLoss(teamTwo);
+                return true;
+            }
+            return false;
         }
-        if (countCups(teamTwoCups) == 0){
-            setWin(teamOne);
-            setLoss(teamTwo);
-            return true;
-        }
-        return false;
+        return true;
     }
 
     private void setWin(Player[] team){
