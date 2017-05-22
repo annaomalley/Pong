@@ -57,7 +57,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    private void setContext() {
+    public void setContext() {
         GameModel.getInstance().setContext(GameActivity.this);
     }
 

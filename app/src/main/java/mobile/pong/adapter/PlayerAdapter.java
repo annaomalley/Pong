@@ -53,7 +53,7 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.ViewHolder
     }
 
     private List<Player> getUsers() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(context.getString(R.string.fb_players));
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("players");
         final List<Player> playerList = new LinkedList<Player>();
         ref.addListenerForSingleValueEvent(
                 new ValueEventListener() {

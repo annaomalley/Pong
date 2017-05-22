@@ -11,7 +11,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import mobile.pong.GameActivity;
-import mobile.pong.R;
 import mobile.pong.data.Player;
 import mobile.pong.model.GameModel;
 
@@ -31,7 +30,7 @@ public class GameStarter extends AppCompatActivity {
 
     private void getPlayerFromDB(final String name1, final String name2,
                                  final String name3, final String name4) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(context.getString(R.string.fb_players));
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("players");
         ref.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
@@ -83,9 +82,11 @@ public class GameStarter extends AppCompatActivity {
     }
 
     private void startGameActivity() {
+        Intent intent = new Intent(context, GameActivity.class);
         if (!(context instanceof GameActivity)) {
-            Intent intent = new Intent(context, GameActivity.class);
             context.startActivity(intent);
+        } else {
+            ((GameActivity) context).setContext();
         }
     }
 }

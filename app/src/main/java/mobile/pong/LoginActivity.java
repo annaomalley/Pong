@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onDestroy() {
         firebaseAuth.signOut();
+        hideProgressDialog();
         super.onDestroy();
     }
 
