@@ -22,6 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
@@ -92,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showProgressDialog(){
-        pd.setMessage("loading");
+        pd.setMessage("Loading");
         pd.show();
     }
 
@@ -126,26 +129,29 @@ public class LoginActivity extends AppCompatActivity {
                                                     firebaseUser.getEmail())).build()
                     );
 
-                    Toast.makeText(LoginActivity.this, "REG OK",
+                    Toast.makeText(LoginActivity.this, "User creation successful",
                             Toast.LENGTH_SHORT).show();
 
                     createPlayer(userNameFromEmail(firebaseUser.getEmail()));
                     moveToNext(userNameFromEmail(firebaseUser.getEmail()));
                 } else {
-                    Toast.makeText(LoginActivity.this, "Failed: "+
-                                    task.getException().getLocalizedMessage(),
-                            Toast.LENGTH_SHORT).show();
+                    toastException(task.getException());
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                hideProgressDialog();
-                Toast.makeText(LoginActivity.this,
-                        "error: "+e.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
         });
+    }
+
+    private void toastException(Exception e) {
+        if(e.getLocalizedMessage().equals("An internal error has occurred. [ WEAK_PASSWORD  ]")) {
+            Toast.makeText(LoginActivity.this, "Password must be at least six characters",
+                    Toast.LENGTH_SHORT).show();
+
+        }
+        else {
+            Toast.makeText(LoginActivity.this,
+                    e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+
     }
 
     public void loginClick() {
@@ -169,10 +175,10 @@ public class LoginActivity extends AppCompatActivity {
                 hideProgressDialog();
 
                 if (task.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Login ok", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     moveToNext(username.getText().toString());
                 } else {
-                    Toast.makeText(LoginActivity.this, "Failed: "+task.getException().getLocalizedMessage(),
+                    Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
             }

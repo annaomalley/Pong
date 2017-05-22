@@ -57,19 +57,33 @@ public class GameView extends View{
         super.onDraw(canvas);
         if(GameModel.getInstance().getGameStarted()) {
             drawCups(canvas);
-            drawTeamOne(canvas);
-            drawTeamTwo(canvas);
+            String teamTwoNames = getTeamTwoNames();
+            String teamOneNames = getTeamOneNames();
+            float textSize = getTextSize(teamOneNames,teamTwoNames);
+            drawTeamOne(canvas, teamOneNames, textSize);
+            drawTeamTwo(canvas, teamTwoNames, textSize);
         }
     }
 
-    private void drawTeamTwo(Canvas canvas) {
+    private String getTeamTwoNames() {
         String teamTwoNames = "";
         Player[] teamTwoPlayers = GameModel.getInstance().getTeamTwoPlayers();
         for (int i = 0; i<teamTwoPlayers.length; i++) {
-            teamTwoNames+=teamTwoPlayers[i].getName() + "+ ";
+            teamTwoNames+=teamTwoPlayers[i].getName() + " + ";
         }
-        teamTwoNames = teamTwoNames.substring(0,teamTwoNames.length() - 2);
+        return teamTwoNames.substring(0,teamTwoNames.length() - 2);
+    }
 
+    private String getTeamOneNames() {
+        String teamOneNames = "";
+        Player[] teamOnePlayers = GameModel.getInstance().getTeamOnePlayers();
+        for (int i = 0; i<teamOnePlayers.length; i++) {
+            teamOneNames+=teamOnePlayers[i].getName() + "+ ";
+        }
+        return teamOneNames.substring(0,teamOneNames.length() - 2);
+    }
+
+    private float getTextSize(String teamOneNames, String teamTwoNames) {
         final float testTextSize = 48f;
 
         paintText.setTextSize(testTextSize);
@@ -77,51 +91,50 @@ public class GameView extends View{
         paintText.getTextBounds(teamTwoNames, 0, teamTwoNames.length(), bounds);
 
         // Calculate the desired size as a proportion of our testTextSize.
-        float desiredTextSizeWidth = testTextSize * getWidth() / bounds.width();
+        float desiredTextSizeWidth = testTextSize * 4*getWidth() / 5 / bounds.width();
         float desiredTextSizeHeight = testTextSize * getHeight() / 6 / bounds.height();
 
-        float desiredTextSize = Math.min(desiredTextSizeHeight,desiredTextSizeWidth);
+        float desiredTextSizeTwo = Math.min(desiredTextSizeHeight,desiredTextSizeWidth);
+
+        paintText.setTextSize(testTextSize);
+        bounds = new Rect();
+        paintText.getTextBounds(teamOneNames, 0, teamOneNames.length(), bounds);
+
+        // Calculate the desired size as a proportion of our testTextSize.
+        desiredTextSizeWidth = testTextSize * 4 * getWidth() / 5 / bounds.width();
+        desiredTextSizeHeight = testTextSize * getHeight() / 6 / bounds.height();
+
+        float desiredTextSizeOne = Math.min(desiredTextSizeHeight,desiredTextSizeWidth);
+
+        return Math.min(desiredTextSizeOne,desiredTextSizeTwo);
+
+    }
+
+    private void drawTeamTwo(Canvas canvas, String teamTwoNames, float desiredTextSize) {
 
         // Set the paint for that size.
         paintText.setTextSize(desiredTextSize);
 
         if(GameModel.getInstance().getCurrentTeam()==2) {
-            canvas.drawText(teamTwoNames, 0, 4*getHeight() / 6, paintText);
+            canvas.drawText(teamTwoNames, getWidth()/10, 15*getHeight() / 24, paintText);
         }
         else {
-            canvas.drawText(teamTwoNames, 0, 3*getHeight() / 6, paintText);
+            canvas.drawText(teamTwoNames, getWidth()/10, 5*getHeight() / 12, paintText);
         }
 
     }
 
-    private void drawTeamOne(Canvas canvas) {
-        String teamOneNames = "";
-        Player[] teamOnePlayers = GameModel.getInstance().getTeamOnePlayers();
-        for (int i = 0; i<teamOnePlayers.length; i++) {
-            teamOneNames+=teamOnePlayers[i].getName() + "+ ";
-        }
-        teamOneNames = teamOneNames.substring(0,teamOneNames.length() - 2);
+    private void drawTeamOne(Canvas canvas, String teamOneNames, float desiredTextSize) {
 
-        final float testTextSize = 48f;
-
-        paintText.setTextSize(testTextSize);
-        Rect bounds = new Rect();
-        paintText.getTextBounds(teamOneNames, 0, teamOneNames.length(), bounds);
-
-        // Calculate the desired size as a proportion of our testTextSize.
-        float desiredTextSizeWidth = testTextSize * getWidth() / bounds.width();
-        float desiredTextSizeHeight = testTextSize * getHeight() / 6 / bounds.height();
-
-        float desiredTextSize = Math.min(desiredTextSizeHeight,desiredTextSizeWidth);
 
         // Set the paint for that size.
         paintText.setTextSize(desiredTextSize);
 
         if(GameModel.getInstance().getCurrentTeam()==1) {
-            canvas.drawText(teamOneNames, 0, 4*getHeight() / 6, paintText);
+            canvas.drawText(teamOneNames, getWidth() / 10, 15*getHeight() / 24, paintText);
         }
         else {
-            canvas.drawText(teamOneNames, 0, 3*getHeight() / 6, paintText);
+            canvas.drawText(teamOneNames, getWidth() / 10, 3*getHeight() / 6, paintText);
         }
     }
 
