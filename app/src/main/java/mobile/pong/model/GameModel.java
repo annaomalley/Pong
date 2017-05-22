@@ -1,15 +1,12 @@
 package mobile.pong.model;
 
 import android.content.Context;
-import android.widget.Toast;
 import android.content.Intent;
 import android.util.Log;
 
 import mobile.pong.GameActivity;
 import mobile.pong.NextTurnActivity;
 import mobile.pong.Player;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by Anna on 5/21/17.

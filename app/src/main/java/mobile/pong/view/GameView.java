@@ -9,8 +9,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.graphics.Path;
-import android.widget.ImageView;
-import mobile.pong.R;
+
 import android.graphics.Rect;
 
 import mobile.pong.Player;
@@ -29,9 +28,6 @@ public class GameView extends View{
 
     private int w;
     private int h;
-
-    MotionEvent Xevent;
-
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -61,9 +57,6 @@ public class GameView extends View{
         super.onDraw(canvas);
         if(GameModel.getInstance().getGameStarted()) {
             drawCups(canvas);
-            if(Xevent!=null) {
-                drawX(canvas,Xevent);
-            }
             drawTeamOne(canvas);
             drawTeamTwo(canvas);
         }
@@ -244,11 +237,9 @@ public class GameView extends View{
             Log.v("cell",Integer.toString(cell));
             if(cell!=-1) {
                 GameModel.getInstance().shot(cell);
-                Xevent = event;
                 invalidate();
             }
             else {
-                Xevent = null;
                 invalidate();
             }
         }
@@ -342,23 +333,6 @@ public class GameView extends View{
         canvas.drawPath(path, paintStars);
 
     }
-
-    private void drawX(Canvas canvas, MotionEvent event) {
-        View view = (View)findViewById(R.id.gameView);
-
-        float sideLength = calculateRadius()/4;
-        Log.v("Yvalue:",Float.toString(event.getY()));
-
-        //Log.v("imageView:",Float.toString(imV.getY()));
-
-        float viewY = view.getY();
-
-        canvas.drawLine(event.getX()-sideLength,event.getY()-sideLength - viewY,
-                event.getX()+sideLength,event.getY()+sideLength - viewY,paintX);
-        canvas.drawLine(event.getX()-sideLength,event.getY()+sideLength - viewY,
-                event.getX()+sideLength,event.getY()-sideLength - viewY,paintX);
-    }
-
 
 
 

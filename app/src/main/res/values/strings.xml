@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Pong</string>
     <string name="action_new_game">New Game</string>
+    <string name="action_leaderboard">Leaderboard</string>
     <string name="continue_button">Continue</string>
 
 </resources>

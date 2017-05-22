@@ -1,5 +1,8 @@
 package mobile.pong;
 
+import java.util.Comparator;
+import java.util.Map;
+
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseError;
@@ -14,7 +17,7 @@ import java.util.Map;
  * Created by student on 21/05/2017.
  */
 
-public class Player {
+public class Player implements Comparable<Player>{
 
     public static final int SHOT_MISSED = 0;
     public static final int SHOT_MADE = 1;
@@ -25,26 +28,29 @@ public class Player {
     private int totalShots;
     private int streak;
 
-    private double shotPercentage;
-    private double winPercentage;
-
     private int wins;
     private int losses;
+    private double shootingPercentage;
+    private double winPercentage;
 
-    public Player(){
-        this.name="";
+    public Player() {
+
     }
 
-    public Player(String name, String key){
+    public Player(String name){
         this.name = name;
         this.uId = key;
         shotsMade = 0;
-        shotPercentage = 0;
+        shootingPercentage = 0;
         winPercentage = 0;
         totalShots = 0;
         streak = 0;
         wins = 0;
         losses = 0;
+    }
+
+    public void setShootingPercentage(double shootingPercentage) {
+        this.shootingPercentage = shootingPercentage;
     }
 
 
@@ -69,13 +75,13 @@ public class Player {
 
     public int getTotalShots(){ return totalShots; }
 
-    public double getShootingPercentage() { return shotPercentage; }
+    public double getShootingPercentage() { return shootingPercentage; }
 
     public void updateShotPercentage(){
         if (totalShots == 0) {
-            shotPercentage = 0;
-        } else {
-            shotPercentage = (100.0 * shotsMade) / totalShots;
+                shootingPercentage = 0;        }
+        else {
+            shootingPercentage = (100.0 * shotsMade) / totalShots;
         }
     }
 
@@ -136,3 +142,35 @@ public class Player {
         mDatabase.updateChildren(toMap());
     }
 }
+
+
+    @Override
+    public int compareTo(Player o) {
+        return Comparators.PERCENTAGE.compare(this, o);
+    }
+
+    public static class Comparators {
+
+        public static Comparator<Player> NAME = new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        };
+
+        public static Comparator<Player> PERCENTAGE = new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                if(o1.getShootingPercentage()>o2.getShootingPercentage()) {
+                    return -1;
+                }
+                if(o1.getShootingPercentage()<o2.getShootingPercentage()) {
+                    return 1;
+                }
+                return 0;
+            }
+        };
+
+    }
+
+    }
